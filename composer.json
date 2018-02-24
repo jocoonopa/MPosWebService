@@ -13,7 +13,7 @@
         "illuminate/support": ">=4.0",
         "ixudra/curl": "^6.16"
     },
-    "version": "1.0.0",
+    "version": "1.0.1",
     "keywords": ["mpos"],
     "autoload": {
         "psr-4": {
