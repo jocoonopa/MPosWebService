@@ -755,6 +755,10 @@ $ php artisan mpos-ws:product:vintages
 
 **Artisan CLI**
 
+```bash
+$ php artisan mpos-ws:cart:add
+```
+
 ## View cart
 
 **url**
@@ -809,6 +813,10 @@ $ php artisan mpos-ws:product:vintages
 
 
 **Artisan CLI**
+
+```bash
+$ php artisan mpos-ws:cart:view
+```
 
 # Remove product from cart
 
@@ -868,3 +876,7 @@ $ php artisan mpos-ws:product:vintages
 ```
 
 **Artisan CLI**
+
+```bash
+$ php artisan mpos-ws:cart:remove
+```
