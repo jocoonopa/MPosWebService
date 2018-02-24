@@ -35,6 +35,9 @@ class MPosWebServiceServiceProvider extends ServiceProvider
                 \jocoonopa\MPosWebService\Console\Commands\ProductVersion::class,
                 \jocoonopa\MPosWebService\Console\Commands\ProductVintages::class,
                 \jocoonopa\MPosWebService\Console\Commands\ProductWineTypes::class,
+                \jocoonopa\MPosWebService\Console\Commands\ShopCartAdd::class,
+                \jocoonopa\MPosWebService\Console\Commands\ShopCartView::class,
+                \jocoonopa\MPosWebService\Console\Commands\ShopCartRemove::class,
             ]);
         }
     }

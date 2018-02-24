@@ -4,8 +4,6 @@ namespace jocoonopa\MPosWebService;
 
 /**
  * Member relate methods
- *
- * @author  jocoonopa <jocoonopa@gmail.com>
  */
 trait MemberTrait
 {

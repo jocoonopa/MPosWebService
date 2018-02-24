@@ -2,6 +2,9 @@
 
 namespace jocoonopa\MPosWebService;
 
+/**
+ * Product related methods
+ */
 trait ProductTrait
 {
     /**

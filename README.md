@@ -56,6 +56,8 @@ api 常見名詞介紹
 
 ## Members profile
 
+**url**
+
 `mpos/service/member/query`
 
 **input**
@@ -120,6 +122,8 @@ $ php artisan mpos-ws:member:query
 
 ## Member count
 
+**url**
+
 `mpos/service/member/count`
 
 **input**
@@ -157,6 +161,8 @@ $ php artisan mpos-ws:member:count
 ```
 
 ## Member Available Fileds
+
+**url**
 
 `mpos/service/member/fields`
 
@@ -219,6 +225,8 @@ $ php artisan mpos-ws:member:districts
 
 > 和 service 的差別是， 這個是查詢該客戶所有的地址
 
+**url**
+
 `mpos/service/member/addressbook/query`
 
 **input**
@@ -275,6 +283,8 @@ $ php artisan mpos-ws:member:addressbook
 
 ## Product Api 版本
 
+**url**
+
 `mpos/service/product/version`
 
 **output**
@@ -300,6 +310,8 @@ $ php artisan mpos-ws:product:version
 ```
 
 ## ProductFileds
+
+**url**
 
 `mpos/service/product/fields`
 
@@ -327,6 +339,8 @@ $ php artisan mpos-ws:product:fields
 
 ## Product advance fields
 
+**url**
+
 `mpos/service/product/detail/fields`
 
 **output**
@@ -351,6 +365,8 @@ $ php artisan mpos-ws:product:fields --detail
 ```
 
 ## Product information
+
+**url**
 
 `mpos/service/product/query`
 
@@ -417,6 +433,8 @@ $ php artisan mpos-ws:product:query
 
 ## Product Count
 
+**url**
+
 `mpos/service/product/count`
 
 **input**
@@ -452,6 +470,8 @@ $ php artisan mpos-ws:product:query
 ```
 
 ## ProductDetail
+
+**url**
 
 `mpos/service/product/detail/query`
 
@@ -547,6 +567,8 @@ $ php artisan mpos-ws:product:query --detail
 
 ## Product Contries
 
+**url**
+
 `mpos/service/product/countries`
 
 **output**
@@ -571,6 +593,8 @@ $ php artisan mpos-ws:product:countries
 ```
 
 ## Product Regions
+
+**url**
 
 `mpos/service/product/regions`
 
@@ -597,6 +621,8 @@ $ php artisan mpos-ws:product:regions
 
 ## Product Wine Types (酒品種類)
 
+**url**
+
 `mpos/service/product/winetypes`
 
 **output**
@@ -617,6 +643,8 @@ $ php artisan mpos-ws:product:regions
 **Artisan CLI**
 
 ## Product Grapes (葡萄品種)
+
+**url**
 
 `mpos/service/product/grapes`
 
@@ -643,6 +671,8 @@ $ php artisan mpos-ws:product:grapes
 
 ## Product Vintages (酒品年份)
 
+**url**
+
 `mpos/service/product/vintages`
 
 **output**
@@ -668,19 +698,173 @@ $ php artisan mpos-ws:product:vintages
 
 # SHOPCART
 
+## Add product
 
-URL::mpos/service/shopcart/add
-input::{"prdID":180868,"storeID":"530","shopQty":5,"saveBy":"website"}
-output::{"message":"处理成功","data":"{\"storeID\":\"530\",\"shopUUID\":\"dbf2166664754c3db8557e836e9554f0\",\"totalAmt\":1275,\"itemCount\":1,\"shopcartTime\":1519266101478,\"shopcartItems\":[{\"prdID\":180868,\"shopQty\":5,\"mixMatchFlag\":\"0\",\"prdBrandEnu\":\"DULUC DUCRU\",\"prdBrandZht\":\" \",\"prdNameEnu\":\"ST JULIEN 2ND WINE 2006\",\"prdNameZht\":\" \",\"prdStatus\":\"A\",\"prdPrice\":255,\"promPrice\":null,\"prdSizeDesc\":\"75CL\",\"prdPack\":\"U\"}]}","error_code":"2000","is_success":true}
+**url**
 
-URL::mpos/service/shopcart/query
-input::{"shopUUID":"dbf2166664754c3db8557e836e9554f0","storeID":"530"}
-output::{"message":"处理成功","data":"{\"storeID\":\"530\",\"shopUUID\":\"dbf2166664754c3db8557e836e9554f0\",\"totalAmt\":1275,\"itemCount\":1,\"shopcartTime\":1519266302012,\"shopcartItems\":[{\"prdID\":180868,\"shopQty\":5,\"mixMatchFlag\":\"0\",\"prdBrandEnu\":\"DULUC DUCRU\",\"prdBrandZht\":\" \",\"prdNameEnu\":\"ST JULIEN 2ND WINE 2006\",\"prdNameZht\":\" \",\"prdStatus\":\"A\",\"prdPrice\":255,\"promPrice\":null,\"prdSizeDesc\":\"75CL\",\"prdPack\":\"U\"}]}","error_code":"2000","is_success":true}
+`mpos/service/shopcart/add`
+
+**input**
+
+```js
+
+{
+    "prdID":180868,
+    "storeID":"530",
+    "shopQty":5,
+    "saveBy":"website"
+}
+
+```
+
+**output**
+
+```js
+
+{
+    "message":"处理成功",
+    "data": {
+        "storeID":"530",
+        "shopUUID":"dbf2166664754c3db8557e836e9554f0",
+        "totalAmt":1275,
+        "itemCount":1,
+        "shopcartTime":1519266101478,
+        "shopcartItems":[
+            {
+                "prdID":180868,
+                "shopQty":5,
+                "mixMatchFlag":"0",
+                "prdBrandEnu":"DULUC DUCRU",
+                "prdBrandZht":" ",
+                "prdNameEnu":"ST JULIEN 2ND WINE 2006",
+                "prdNameZht":" ",
+                "prdStatus":"A",
+                "prdPrice":255,
+                "promPrice":null,
+                "prdSizeDesc":"75CL",
+                "prdPack":"U"
+            }
+        ]
+    },
+    "error_code":"2000",
+    "is_success":true
+}
+
+```
 
 
+**Artisan CLI**
 
-URL::mpos/service/shopcart/remove
-缺省product or qty代表清空shopcart
-input::{"shopUUID":"dbf2166664754c3db8557e836e9554f0","prdID":180868,"shopQty":3,"storeID":"530","saveBy":"website"}
-output::{"message":"处理成功","data":"{\"storeID\":\"530\",\"shopUUID\":\"dbf2166664754c3db8557e836e9554f0\",\"totalAmt\":510,\"itemCount\":1,\"shopcartTime\":1519266640395,\"shopcartItems\":[{\"prdID\":180868,\"shopQty\":2,\"mixMatchFlag\":\"0\",\"prdBrandEnu\":\"DULUC DUCRU\",\"prdBrandZht\":\" \",\"prdNameEnu\":\"ST JULIEN 2ND WINE 2006\",\"prdNameZht\":\" \",\"prdStatus\":\"A\",\"prdPrice\":255,\"promPrice\":null,\"prdSizeDesc\":\"75CL\",\"prdPack\":\"U\"}]}","error_code":"2000","is_success":true}
+## View cart
 
+**url**
+
+`mpos/service/shopcart/query`
+
+**input**
+
+```js
+
+{
+    "shopUUID":"dbf2166664754c3db8557e836e9554f0",
+    "storeID":"530"
+}
+
+```
+
+**output**
+
+```js
+
+{
+    "message":"处理成功",
+    "data":{
+        "storeID":"530",
+        "shopUUID":"dbf2166664754c3db8557e836e9554f0",
+        "totalAmt":1275,
+        "itemCount":1,
+        "shopcartTime":1519266302012,
+        "shopcartItems":[
+            {
+                "prdID":180868,
+                "shopQty":5,
+                "mixMatchFlag":"0",
+                "prdBrandEnu":"DULUC DUCRU",
+                "prdBrandZht":" ",
+                "prdNameEnu":"ST JULIEN 2ND WINE 2006",
+                "prdNameZht":" ",
+                "prdStatus":"A",
+                "prdPrice":255,
+                "promPrice":null,
+                "prdSizeDesc":"75CL",
+                "prdPack":"U"
+            }
+        ]
+    },
+    "error_code":"2000",
+    "is_success":true
+}
+
+```
+
+
+**Artisan CLI**
+
+# Remove product from cart
+
+**url**
+
+`mpos/service/shopcart/remove`
+
+**input**
+
+```js
+
+{
+    "shopUUID":"dbf2166664754c3db8557e836e9554f0",
+    "prdID":180868,
+    "shopQty":3,
+    "storeID":"530",
+    "saveBy":"website"
+}
+
+```
+
+**output**
+
+> 缺少product or qty代表清空shopcart
+
+```js
+
+{
+    "message":"处理成功",
+    "data":{
+        "storeID":"530",
+        "shopUUID":"dbf2166664754c3db8557e836e9554f0",
+        "totalAmt":510,
+        "itemCount":1,
+        "shopcartTime":1519266640395,
+        "shopcartItems":[
+            {
+                "prdID":180868,
+                "shopQty":2,
+                "mixMatchFlag":"0",
+                "prdBrandEnu":"DULUC DUCRU",
+                "prdBrandZht":" ",
+                "prdNameEnu":"ST JULIEN 2ND WINE 2006",
+                "prdNameZht":" ",
+                "prdStatus":"A",
+                "prdPrice":255,
+                "promPrice":null,
+                "prdSizeDesc":"75CL",
+                "prdPack":"U"
+            }
+        ]
+    },
+    "error_code":"2000",
+    "is_success":true
+}
+
+```
+
+**Artisan CLI**
