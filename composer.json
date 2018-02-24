@@ -1,0 +1,33 @@
+{
+    "name": "jocoonopa/m-pos-web-service",
+    "description": "Made for purpose of cross project",
+    "type": "plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jocoonopa",
+            "email": "jocoonopa@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/support": ">=4.0",
+        "ixudra/curl": "^6.16"
+    },
+    "version": "dev-master",
+    "keywords": ["mpos"],
+    "autoload": {
+        "psr-4": {
+            "jocoonopa\\MPosWebService\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "jocoonopa\\MPosWebService\\MPosWebServiceServiceProvider"
+            ],
+            "aliases": {
+                "MPosWS": "jocoonopa\\MPosWebService\\Facades\\MPosWebService"
+            }
+        }
+    }
+}
