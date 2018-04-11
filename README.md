@@ -20,6 +20,8 @@ api 常見名詞介紹
 
 `keywords` 要查找的位置，查找多个位置用 `；` 隔开
 
+其中 `storeID` 是必要條件，一定要加否則會回傳 `NULL`
+
 ## keywords
 
 如果内容对应多个 `queryFields` 以 `;`隔开
@@ -503,6 +505,7 @@ $ php artisan mpos-ws:product:query
                 "country":null,
                 "prdID":null,
                 "storeID":null,
+                "region": null,
                 "mixMatchFlag":null,
                 "prdBrandEnu":"DULUC DUCRU",
                 "prdNameEnu":"ST JULIEN 2ND WINE 2006",
@@ -544,6 +547,8 @@ $ php artisan mpos-ws:product:query
                 "productNameZht":null,
                 "provinceZhs":null,
                 "provinceZht":null,
+                "regionZhs": null,
+                "regionZht": null,
                 "sweetnessZhs":null,
                 "sweetnessZht":null,
                 "tastingNoteZhs":null,
@@ -713,6 +718,7 @@ $ php artisan mpos-ws:product:vintages
     "storeID":"530",
     "shopQty":5,
     "saveBy":"website"
+    "shopUUID": 'YourShopUUID', // 如果未傳入則由 Web Service 自行產生
 }
 
 ```
@@ -879,4 +885,400 @@ $ php artisan mpos-ws:cart:view
 
 ```bash
 $ php artisan mpos-ws:cart:remove
+```
+
+# Order
+
+## Order  available fields
+
+**url**
+`http://dev.vigasia.com/mpos/service/order/fields`
+
+**output**
+
+```js
+
+{
+    "message":"处理成功",
+    "data": {
+        "queryFields":"orderID|membershipType|orderDateR|acctType|orderAmt|loginID|shipTitle|discount|shipFirstName|shipLastName|shipAddr1|shipAddr2|shipAddr3|shipDistID|shipDistName|shipPhoneNo|shipFaxNo|shipMobileNo|billTitle|billFirstName|billLastName|billCompany|billAddr1|billAddr2|billAddr3|billDistID|billDistName|billPhoneNo|billFaxNo|billMobileNo|billEmail|payment|drawerName|cardNo|cardExpire|deliverDate|deliverTime|deliverStoreID|specialInstruction|orderStatus|deliveryCharge|umiCardNo|saveBy|pickupStore"
+    },
+    "error_code":"2000",
+    "is_success":true
+}
+
+
+```
+
+## Order item available fields
+
+**url**
+`http://dev.vigasia.com/mpos/service/order/item/fields`
+
+**output**
+
+```js
+
+{
+    "message":"处理成功",
+    "data":{
+        "queryFields":"orderID|prdID|prdPrice|promPrice|normalPrice|orderQty|orderItm|orderRemark|prdBrandEnu|prdBrandZht|prdNameEnu|prdNameZht|prdCode|prdSequence|promotionStatus"
+    },
+    "error_code":"2000",
+    "is_success":true
+}
+
+```
+
+## Create order
+**url**
+`http://dev.vigasia.com/mpos/service/order/add`
+
+**input** 
+
+(不能附帶 orderID, items 一定要有)
+
+```js
+
+{
+    "billAddr1":"pBillAddr1",
+    "billAddr2":"pBillAddr2",
+    "billAddr3":"pBillAddr3",
+    "billCompany":"pBillCompany",
+    "billDistID":"1002",
+    "billDistName":"Admiralty",
+    "billEmail":"pBillEmail",
+    "billFirstName":"BillFirstName",
+    "billLastName":"pBillLastName",
+    "billFaxNo":"pBillFaxNo",
+    "billTitle":"Mr",
+    "cardExpire":"2018-08",
+    "deliverDate":"20180227",
+    "deliverStoreID":"530",
+    "deliverTime":"10:00AM - 02:00PM",
+    "drawerName":"pDrawerName",
+    "orderAmt":60,
+    "payment":"americanExpress",
+    "shipAddr1":"pShipAddr1",
+    "shipAddr2":"pShipAddr2",
+    "shipAddr3":"pShipAddr3",
+    "shipDistID":"1001",
+    "shipDistName":"Aberdeen",
+    "shipFirstName":"pShipFirstName",
+    "shipLastName":"pShipLastName",
+    "shipPhoneNo":"shipPhoneNo",
+    "shipMobileNo":"shipMobileNo",
+    "billPhoneNo":"billPhoneNo",
+    "billMobileNo":"billMobileNo",
+    "cardNo":"311111111111111",
+    "shipFaxNo":"pShipFaxNo",
+    "shipTitle":"Mr",
+    "specialInstruction":"for test",
+    "acctType":"Individual",
+    "discount":10,
+    "deliveryCharge":true,
+    "umiCardNo":"010100003283",
+    "membershipType":"Gold",
+    "loginID":1,
+    "orderItems":[
+        {
+            "prdID":180868,
+            "prdPrice":10,
+            "promPrice":12,
+            "normalPrice":10,
+            "orderQty":5,
+            "orderItm":"Y",
+            "orderRemark":"test",
+            "prdBrandEnu":"DULUC",
+            "prdBrandZht":"DULUC ZHT",
+            "prdNameEnu":"DULUC DUCRU",
+            "prdNameZht":"DULUC DUCRU ZHT",
+            "prdCode":"",
+            "prdSequence":1,
+            "promotionStatus":false
+        }
+    ],
+    "saveBy":"WebSite",
+    "pickupStore":"512"
+}
+
+```
+
+**output**
+
+```js
+
+{
+    "message":"处理成功",
+    "data": {
+        "orderID":163100000000012
+    },
+    "error_code":"2000",
+    "is_success":true
+}
+
+```
+
+
+## Query for orders
+
+(測試一下有無 currentPage, pageSize 等參數)
+
+**url**
+`http://dev.vigasia.com/mpos/service/order/query`
+
+**input**
+
+
+```js
+
+{
+    "keywords":"163100000000012",
+    "queryFields":"orderID",
+    "displayFields":`
+        orderID;
+        membershipType;
+        orderDate;acctType;
+        orderAmt;
+        loginID;
+        shipTitle;
+        discount;
+        shipFirstName;
+        shipLastName;
+        shipAddr1;
+        shipAddr2;
+        shipAddr3;
+        shipDistID;
+        shipDistName;
+        shipPhoneNo;
+        shipFaxNo;
+        shipMobileNo;
+        billTitle;
+        billFirstName;
+        billLastName;
+        billCompany;
+        billAddr1;
+        billAddr2;
+        billAddr3;
+        billDistID;
+        billDistName;
+        billPhoneNo;
+        billFaxNo;
+        billMobileNo;
+        billEmail;
+        payment;
+        drawerName;
+        cardNo;
+        cardExpire;
+        deliverDate;
+        deliverTime;
+        deliverStoreID;
+        specialInstruction;
+        orderStatus;
+        deliveryCharge;
+        umiCardNo;
+        saveBy;
+        pickupStore`
+}
+
+```
+
+**output**
+
+```js
+
+{
+    "message":"处理成功",
+    "data": {
+        "orderHeaders":[
+            {
+                "saveBy":"WebSite",
+                "orderItems":null,
+                "orderID":163100000000012,
+                "billAddr1":"pBillAddr1",
+                "billAddr2":"pBillAddr2",
+                "billAddr3":"pBillAddr3",
+                "billCompany":"pBillCompany",
+                "billDistID":"1002",
+                "billDistName":"Admiralty",
+                "billEmail":"pBillEmail",
+                "billFirstName":"BillFirstName",
+                "billLastName":"pBillLastName",
+                "billFaxNo":"pBillFaxNo",
+                "billTitle":"Mr",
+                "cardExpire":"2018-08",
+                "deliverDate":"20180227",
+                "deliverStoreID":"530",
+                "deliverTime":"10:00AM - 02:00PM",
+                "drawerName":"pDrawerName",
+                "orderAmt":60,
+                "orderDate":"20180228",
+                "orderStatus":"Ordered",
+                "payment":"americanExpress",
+                "shipAddr1":"pShipAddr1",
+                "shipAddr2":"pShipAddr2",
+                "shipAddr3":"pShipAddr3",
+                "shipDistID":"1001",
+                "shipDistName":"Aberdeen",
+                "shipFirstName":"pShipFirstName",
+                "shipLastName":"pShipLastName",
+                "shipPhoneNo":"shipPhoneNo",
+                "shipMobileNo":"shipMobileNo",
+                "billPhoneNo":"billPhoneNo",
+                "billMobileNo":"billMobileNo",
+                "cardNo":"311111111111111",
+                "shipFaxNo":"pShipFaxNo",
+                "shipTitle":"Mr",
+                "specialInstruction":"for test",
+                "acctType":"Individual",
+                "discount":10,
+                "deliveryCharge":true,
+                "umiCardNo":"010100003283",
+                "membershipType":"Gold",
+                "loginID":1,
+                "pickupStore":"512"
+            }
+        ]
+    },
+    "error_code":"2000",
+    "is_success":true
+}
+
+
+```
+
+## Order count
+**url**
+`http://dev.vigasia.com/mpos/service/order/count`
+
+**input**
+
+```js
+
+{
+    "keywords":"163100000000012",
+    "queryFields":"orderID"
+}
+
+```
+
+**output**
+
+```js
+
+{
+    "message":"处理成功",
+    "data": {
+        "noOfOrderHeaders":1
+    },
+    "error_code":"2000",
+    "is_success":true
+}
+
+```
+
+## Order item query
+**url**
+`http://dev.vigasia.com/mpos/service/order/item/query`
+
+**input**
+
+```js
+
+{
+    "keywords":"163100000000012",
+    "queryFields":"orderID",
+    "displayFields":"orderID;prdID;prdPrice;promPrice;normalPrice;orderQty;orderItm;orderRemark;prdBrandEnu;prdBrandZht;prdNameEnu;prdNameZht;prdCode;prdSequence;promotionStatus"
+}
+
+```
+**output**
+
+```js
+
+{
+    "message":"处理成功",
+    "data":{
+        "orderItems":[
+            {
+                "prdID":180868,
+                "orderID":163100000000012,
+                "prdBrandEnu":"DULUC",
+                "prdBrandZht":"DULUC ZHT",
+                "prdNameEnu":"DULUC DUCRU",
+                "prdNameZht":"DULUC DUCRU ZHT",
+                "prdPrice":10,
+                "promPrice":12,
+                "normalPrice":10,
+                "orderQty":5,
+                "orderItm":"Y",
+                "orderRemark":"test",
+                "prdCode":null,
+                "prdSequence":1,
+                "promotionStatus":false
+            }
+        ]
+    },
+    "error_code":"2000",
+    "is_success":true
+}
+```
+
+## Order time slots (確定是送貨時間? 那 input 是?)
+
+**url**
+`http://dev.vigasia.com/mpos/service/order/timeslots`
+
+**input**
+**output**
+
+```js
+
+{
+    "message":"处理成功",
+    "data":{
+        "timeslots":["10:00AM - 02:00PM"]
+    },
+    "error_code":"2000",
+    "is_success":true
+}
+
+```
+
+## Order delivery methods
+**url**
+`http://dev.vigasia.com/mpos/service/order/deliverymethods`
+
+**input**
+
+
+**output**
+
+```js
+
+{
+    "message":"处理成功",
+    "data": {
+        "deliverymethods":[
+            {
+                deliverymethodCode:"VISAMasterCard",
+                deliverymethodValue:"VISA / MasterCard"
+            },
+
+            {
+                deliverymethodCode:"UnionPay",
+                deliverymethodValue:"UnionPay"
+            },
+
+            {
+                deliverymethodCode:"americanExpress",
+                deliverymethodValue:"American Express"
+            }
+        ]
+    },
+    "error_code":"2000",
+    "is_success":true
+}
+
+
 ```

@@ -32,7 +32,7 @@ trait ProductTrait
             'meta' => [
                 'current_page' => (int) array_get($data, 'currentPage', 1),
                 'last_page' => floor($count/$pageSize),
-                'per_page' => (int) array_get($data, 'pageSize', 10),
+                'per_page' => (int) array_get($data, 'pageSize', $pageSize),
                 'total' => $count,
             ],
         ];
@@ -41,7 +41,7 @@ trait ProductTrait
     /**
      * fetchProductsCount
      * 
-     * @param  array $data 
+     * @param  array $data
      * @return integer
      */
     public function fetchProductsCount(array $data)

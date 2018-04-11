@@ -38,6 +38,9 @@ class MPosWebServiceServiceProvider extends ServiceProvider
                 \jocoonopa\MPosWebService\Console\Commands\ShopCartAdd::class,
                 \jocoonopa\MPosWebService\Console\Commands\ShopCartView::class,
                 \jocoonopa\MPosWebService\Console\Commands\ShopCartRemove::class,
+                \jocoonopa\MPosWebService\Console\Commands\OrderQuery::class,
+                \jocoonopa\MPosWebService\Console\Commands\OrderItem::class,
+                \jocoonopa\MPosWebService\Console\Commands\OrderCreate::class,
             ]);
         }
     }
