@@ -1019,6 +1019,12 @@ $ php artisan mpos-ws:cart:remove
 
 ```
 
+**Artiasan CLI**
+
+```bash
+$ php artisan mpos-ws:order:create
+```
+
 
 ## Query for orders
 
@@ -1144,8 +1150,14 @@ $ php artisan mpos-ws:cart:remove
     "is_success":true
 }
 
-
 ```
+
+**Artiasan CLI**
+
+```bash
+$ php artisan mpos-ws:order:query
+```
+
 
 ## Order count
 **url**
@@ -1177,7 +1189,8 @@ $ php artisan mpos-ws:cart:remove
 
 ```
 
-## Order item query
+## Get specific order item
+
 **url**
 `http://dev.vigasia.com/mpos/service/order/item/query`
 
@@ -1222,6 +1235,12 @@ $ php artisan mpos-ws:cart:remove
     "error_code":"2000",
     "is_success":true
 }
+```
+
+**Artiasan CLI**
+
+```bash
+$ php artisan mpos-ws:order:item
 ```
 
 ## Order time slots (確定是送貨時間? 那 input 是?)
@@ -1280,5 +1299,407 @@ $ php artisan mpos-ws:cart:remove
     "is_success":true
 }
 
+```
+
+
+# Stock
+
+**url**
+`http://dev.vigasia.com/mpos/service/stock/query`
+
+**input**
+
+```js
+{
+    storeID: 530,
+    prdID: 361396,
+}
+```
+
+**output**
+
+```js
+
+{
+    message:"处理成功",
+    data: {
+        "prdID":361396,
+        "storeID":"530",
+        "minStockLevel":0,
+        "actualStock":200,
+        "saleStock":2,
+        "cardStock":198
+    },
+    "error_code": "2000",
+    "is_success": true
+}
+
+```
+
+**Artisan CLI**
+
+```bash
+
+$ php artisan mpos-ws:product:stock
+
+```
+
+# Promotion -（需要上uat才有测试数据）
+
+**url**
+`http://dev.vigasia.com/mpos/service/promo/query`
+
+**input**
+
+```js
+
+{
+    "items":[
+        {
+            "barcode":"5000185005895",
+            "qty":2,
+            "seqNo":1
+        },
+        {
+            "barcode":"4892368653389",
+            "qty":2,
+            "seqNo":2
+        }
+    ],
+    "storeID":"10",
+    "memberNo":"2599030179292",
+    "posNo":"99",
+    "transNo":"1234",
+    "languageID":7
+}
+
+```
+
+**output**
+
+```js
+
+{
+    "message":"处理成功",
+    "data": {
+        "responseCode":"BPG99",
+        "storeID":"10",
+        "items":[
+            {
+                "barcode":"5000185005895",
+                "qty":2,
+                "seqNo":1,
+                "promotions":[]
+            },
+
+            {
+                "barcode":"4892368653389",
+                "qty":2,
+                "seqNo":2,
+                "promotions":[]
+            }
+        ],
+
+        "promotions":[],
+        "missedPromotions":[],
+        "totalAmount":null,
+        "totalDiscountAmt":null
+    },
+    "error_code":"2000",
+    "is_success":true
+}
+
+// 成功例子
+{  
+   "storeID":"999",
+   "responseCode":"00",
+   "totalAmount":810,
+   "totalDiscountAmt":190,
+   "items":[
+      {
+         "seqNo":1,
+         "barcode":"6942074242372",
+         "qty":1, 
+         "errorCode":"00",
+         "itemCode":"100208101",
+         "description":"屈臣氏多效?理牙?棒",
+         "additionalInfo":"",
+         "rtlPrice":1000,
+         "deptDesc":"Oral",
+         "subDeptDesc":"lOral Strips & S",
+         "itemDiscount":190,
+         "promotions":[
+            {
+               "promoNo":"700123481",
+               "promoDesc":"SAVE 10%",
+               "amountDisplayRule":"Money",
+               "apportValue":100,
+               "rewardType":"15",
+               "rewardAmount":0
+            },
+            {
+               "promoNo":"700123423",
+               "promoDesc":"會員即享9折優惠",
+               "amountDisplayRule":"Money",
+               "apportValue":90,
+               "rewardType":"15",
+               "rewardAmount":0
+            }
+         ]
+      },
+      {
+         "seqNo":2,
+         "barcode":"1234567724678",
+         "qty":2,
+         "errorCode":"01"
+      }
+   ],
+   "promotions":[
+      {
+         "promoType":"2",
+         "promoNo":"700123481",
+         "promoDesc":"SAVE 10%",
+         "rewardType":"13",
+         "apportionmentType":"1",
+         "amountDisplayRule":"Money",
+         "rewardAmount":100
+      },
+      {
+         "promoType":"2",
+         "promoNo":"700123423",
+         "promoDesc":"會員即享9折優惠",
+         "rewardType":"13",
+         "apportionmentType":"1",
+         "amountDisplayRule":"Money",
+         "rewardAmount":90
+      },
+      {
+         "promoType":"2",
+         "promoNo":"300395",
+         "promoDesc":"Double Point on Seleted Date",
+         "rewardType":"19",
+         "apportionmentType":"4",
+         "amountDisplayRule":"Money",
+         "rewardAmount":0
+      }
+   ],
+   "missedPromotions":[
+      {
+         "description":"3 FOR 33% OFF MIX AND MATCH",
+         "ticketLevel":"0",
+         "missedPromotionItems":[
+            {
+               "plu":"100014207",
+               "pluDesc":"佳洁士防蛀牙膏140克",
+               "pluRtlPrice":550
+            }
+         ]
+      }
+   ] 
+}
+
+```
+
+# Promotion List
+
+**url**
+`http://dev.vigasia.com/mpos/service/promo/list`
+
+**output**
+
+```js
+
+{
+    "message":"处理成功",
+    "data":{
+        "promotions":[
+            {
+                "promoId":"163547001",
+                "promoDescription": [
+                    {
+                        "description":"Buy 3 Save $.8",
+                        "languageId":"0"
+                    },
+
+                    {
+                        "description":"買3慳$.8",
+                        "languageId":"7"
+                    },
+
+                    {
+                        "description":"买3悭$.8",
+                        "languageId":"8"
+                    }
+                ]
+            },
+
+            {
+                "promoId":"163678001",
+                "promoDescription": [
+                    {
+                        "description":"Buy 2 Save $5.9",
+                        "languageId":"0"
+                    },
+
+                    {
+                        "description":"買2慳$5.9",
+                        "languageId":"7"
+                    },
+
+                    {
+                        "description":"买2悭$5.9",
+                        "languageId":"8"
+                    }
+                ]
+            },
+
+            {
+                "promoId":"163696001",
+                "promoDescription":[
+                    {
+                        "description":"Buy 2 Save $3.1",
+                        "languageId":"0"
+                    },
+
+                    {
+                        "description":"買2慳$3.1",
+                        "languageId":"7"
+                    },
+
+                    {
+                        "description":"买2悭$3.1",
+                        "languageId":"8"
+                    }
+                ]
+            },
+
+            {
+                "promoId":"21637712163",
+                "promoDescription":[
+                    {
+                        "description":"Buy 2 Save $21",
+                        "languageId":"0"
+                    },
+
+                    {
+                        "description":"買2慳$21",
+                        "languageId":"7"
+                    },
+
+                    {
+                        "description":"买2悭$21",
+                        "languageId":"8"
+                    }
+                ]
+            }
+        ]
+    },
+    "error_code":"2000",
+    "is_success":true
+}
+
+
+```
+
+
+
+# Payment-wirecard 
+
+## link
+
+**url**
+`http://dev.vigasia.com/mpos/service/payment/wirecard/link`
+
+**input**
+
+```js
+
+{
+    "orderID":163200000001,
+    "saveBy":"WebSite",
+    "redirectUrl":"http://localhost:8080/payment/payServlet2",
+    "amt":"5.01"
+}
+
+```
+
+**output**
+
+```js
+
+{
+    "message":"处理成功",
+    "data":"<script language=\"javascript\">window.onload=function(){document.pay_form.submit();}</script>\n<form id=\"pay_form\" name=\"pay_form\" action=\"https://test.wirecard.com.sg/engine/hpp/\" method=\"post\">\n<input type=\"hidden\" name=\"redirect_url\" id=\"redirect_url\" value=\"http://localhost:8080/payment/payServlet2\">\n<input type=\"hidden\" name=\"merchant_account_id\" id=\"merchant_account_id\" value=\"92ae4548-354f-4d73-b46a-59458dd1ef6c\">\n<input type=\"hidden\" name=\"ip_address\" id=\"ip_address\" value=\"\">\n<input type=\"hidden\" name=\"request_id\" id=\"request_id\" value=\"PWC15234171829615689\">\n<input type=\"hidden\" name=\"requested_amount_currency\" id=\"requested_amount_currency\" value=\"HKD\">\n<input type=\"hidden\" name=\"requested_amount\" id=\"requested_amount\" value=\"5.01\">\n<input type=\"hidden\" name=\"request_signature\" id=\"request_signature\" value=\"f6939b666e7181ee32b1ec16e37404993e6431f7d34ee1f2f2ec54c457e2640a\">\n<input type=\"hidden\" name=\"transaction_type\" id=\"transaction_type\" value=\"purchase\">\n<input type=\"hidden\" name=\"request_time_stamp\" id=\"request_time_stamp\" value=\"20180411032622\">\n<input type=\"hidden\" name=\"locale\" id=\"locale\" value=\"en\">\n<input type=\"hidden\" name=\"transaction_id\" id=\"transaction_id\" value=\"72f36024-38e1-4631-9a34-4ba4e2e575ae\">\n</form>\n",
+    "error_code":"2000",
+    "is_success":true
+}
+
+```
+
+
+## Payment feedback
+
+**url**
+`http://dev.vigasia.com/mpos/service/payment/wirecard/feedback`
+
+**input**
+
+```js
+
+transaction_type=purchase
+&status_code_1=201.0000
+&status_severity_1=information
+&completion_time_stamp=20180404022950
+&status_code_2=500.1999
+&status_severity_2=error
+&status_code_3=999.9999
+&status_severity_3=error
+&transaction_state=failed
+&token_id=4119841438560001
+&merchant_account_id=92ae4548-354f-4d73-b46a-59458dd1ef6c
+&first_name=test
+&requested_amount_currency=HKD
+&status_description_1=3d-acquirer:The resource was successfully created.
+&masked_account_number=400555******0001
+&status_description_2=3d-acquirer:The acquirer returned an unknown response.  Contact Technical Support.  
+&status_description_3=System error
+&browser_hostname=192.168.10.20
+&provider_status_code_2=
+&provider_status_code_1=
+&browser_os=Windows 7
+&response_signature=49ea944e8912f9127983703e77ac71bfacf76ee57dc0014ac0f49fc719898c16
+&group_transaction_id=9a7faae1-e5f0-41df-a131-9b7769cba18d
+&browser_ip_address=192.168.10.20
+&provider_account_id=20150902005
+&response_signature_v2=SFMyNTYKdHJhbnNhY3Rpb25faWQ9MDI4ODY0NjgtZTkyNC00ODAwLTkwOTYtNWY0NmIwNWE4ZTFkCmNvbXBsZXRpb25fdGltZXN0YW1wPTIwMTgwNDA0MDIyOTUwCm1hc2tlZF9hY2NvdW50X251bWJlcj00MDA1NTUqKioqKiowMDAxCnRva2VuX2lkPTQxMTk4NDE0Mzg1NjAwMDEKYXV0aG9yaXphdGlvbl9jb2RlPQptZXJjaGFudF9hY2NvdW50X2lkPTkyYWU0NTQ4LTM1NGYtNGQ3My1iNDZhLTU5NDU4ZGQxZWY2Ywp0cmFuc2FjdGlvbl9zdGF0ZT1mYWlsZWQKaXBfYWRkcmVzcz0KdHJhbnNhY3Rpb25fdHlwZT1wdXJjaGFzZQpyZXF1ZXN0X2lkPVBXQzE1MjI4MDg4Nzc5NDMyNTEK.s5r1U/nblIBM5CP2jOPVEB0SW6XfJRGIL+kM/iO33iQ=
+&provider_status_description_1=
+&transaction_id=02886468-e924-4800-9096-5f46b05a8e1d
+&provider_status_code_3=
+&provider_status_description_2=
+&browser_version=65.0.3325.181
+&provider_status_description_3=
+&ip_address=&request_id=PWC1522808877943251
+&provider_transaction_reference_id=
+&requested_amount=5.01
+&provider_transaction_id_3=
+&provider_transaction_id_1=
+&provider_transaction_id_2=
+&last_name=test
+&merchant_account_resolver_category=
+&authorization_code=
+&save_by=web
+
+```
+
+**outpu**
+
+```js
+
+{
+    "message":"处理成功",
+    "data":"201.0000",
+    "error_code":"2000",
+    "is_success":true
+}
 
 ```

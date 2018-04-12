@@ -220,4 +220,32 @@ trait ProductTrait
 
         return array_get($response, 'data');
     }
+
+    /**
+     * Get Stock By Id
+     *
+     * @param  integer $storeId
+     * @param  integer $productId
+     * @return array {
+     *   "prdID":361396,
+     *   "storeID":"530",
+     *   "minStockLevel":0,
+     *   "actualStock":200,
+     *   "saleStock":2,
+     *   "cardStock":198
+     * }
+     */
+    public function getStockById($storeId, $productId)
+    {
+        $response = $this->curl(
+            [
+                'storeID' => $storeId,
+                'prdID' => $productId,
+            ],
+
+            'mpos/service/stock/query'
+        );
+
+        return array_get($response, 'data');
+    }
 }

@@ -11,7 +11,7 @@ use Ixudra\Curl\CurlService;
  */
 class MPosWebService
 {
-    use MemberTrait, ProductTrait, ShopTrait, OrderTrait;
+    use MemberTrait, ProductTrait, ShopTrait, OrderTrait, PromotionTrait;
 
     /**
      * @var \Ixudra\Curl\CurlService

@@ -41,6 +41,7 @@ class MPosWebServiceServiceProvider extends ServiceProvider
                 \jocoonopa\MPosWebService\Console\Commands\OrderQuery::class,
                 \jocoonopa\MPosWebService\Console\Commands\OrderItem::class,
                 \jocoonopa\MPosWebService\Console\Commands\OrderCreate::class,
+                \jocoonopa\MPosWebService\Console\Commands\ProductStock::class,
             ]);
         }
     }
