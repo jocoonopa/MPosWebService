@@ -17,7 +17,7 @@ trait ShopTrait
         $response = $this->curl(
             $data,
 
-            'mpos/service/shopcart/add'
+            "{$this->getApiUrl()}/shopcart/add"
         );
 
         return array_get($response, 'data');
@@ -33,7 +33,7 @@ trait ShopTrait
         $response = $this->curl(
             $data,
 
-            'mpos/service/shopcart/query'
+            "{$this->getApiUrl()}/shopcart/query"
         );
 
         return array_get($response, 'data');
@@ -49,7 +49,7 @@ trait ShopTrait
         $response = $this->curl(
             $data,
 
-            'mpos/service/shopcart/remove'
+            "{$this->getApiUrl()}/shopcart/remove"
         );
 
         return array_get($response, 'data');

@@ -39,6 +39,23 @@ trait ProductTrait
     }
 
     /**
+     * fetchProducts
+     *
+     * @param  array $data
+     * @return array $data
+     */
+    public function fetchProducts(array $data)
+    {
+        $response = $this->curl(
+            $data,
+
+            "{$this->getApiUrl()}/product/query"
+        );
+
+        return array_get($response, 'data');
+    }
+
+    /**
      * fetchProductsCount
      * 
      * @param  array $data
@@ -49,7 +66,7 @@ trait ProductTrait
         $response = $this->curl(
             $data,
 
-            'mpos/service/product/count'
+            "{$this->getApiUrl()}/product/count"
         );
 
         if (isset($response['data'])) {
@@ -57,22 +74,6 @@ trait ProductTrait
         }
 
         return 0;
-    }
-
-    /**
-     * fetchProductCountries
-     * 
-     * @return array
-     */
-    public function fetchProductCountries()
-    {
-        $response = $this->curl(
-            [],
-
-            'mpos/service/product/countries'
-        );
-
-        return array_get($response, 'data');
     }
 
     /**
@@ -86,7 +87,7 @@ trait ProductTrait
         $response = $this->curl(
             $data,
 
-            'mpos/service/product/detail/query'
+            "{$this->getApiUrl()}/product/detail/query"
         );
 
         return array_get($response, 'data');
@@ -102,7 +103,7 @@ trait ProductTrait
         $response = $this->curl(
             [],
 
-            'mpos/service/product/fields'
+            "{$this->getApiUrl()}/product/fields"
         );
 
         return array_get($response, 'data');
@@ -118,7 +119,7 @@ trait ProductTrait
         $response = $this->curl(
             [],
 
-            'mpos/service/product/detail/fields'
+            "{$this->getApiUrl()}/product/detail/fields"
         );
 
         return array_get($response, 'data');
@@ -128,30 +129,31 @@ trait ProductTrait
      * fetchProductGrapes
      * 
      * @return array
+     * @note {\"grapes\":[\"Cabernet Franc\",\"Cabernet Sauvignon\"]}
      */
     public function fetchProductGrapes()
     {
         $response = $this->curl(
             [],
 
-            'mpos/service/product/grapes'
+            "{$this->getApiUrl()}/product/grapes"
         );
 
         return array_get($response, 'data');
     }
 
     /**
-     * fetchProducts
-     *
-     * @param  array $data
-     * @return array $data
+     * fetchProductCountries
+     * 
+     * @return array
+     * @note {\"countries\":[\"France\",\"Germany\"]}
      */
-    public function fetchProducts(array $data)
+    public function fetchProductCountries()
     {
         $response = $this->curl(
-            $data,
+            [],
 
-            'mpos/service/product/query'
+            "{$this->getApiUrl()}/product/countries"
         );
 
         return array_get($response, 'data');
@@ -160,14 +162,83 @@ trait ProductTrait
     /**
      * fetchProductRegions
      * 
-     * @return array
+     * @return array 
+     * @note {\"regions\":[\"Bordeaux\",\"Burgundy\"]}
      */
     public function fetchProductRegions()
     {
         $response = $this->curl(
             [],
 
-            'mpos/service/product/regions'
+            "{$this->getApiUrl()}/product/regions"
+        );
+
+        return array_get($response, 'data');
+    }
+
+    /**
+     * fetchProductVintages
+     * 
+     * @return array
+     * @note {\"vintages\":[\"1995\",\"1996\"]}
+     */
+    public function fetchProductVintages()
+    {
+        $response = $this->curl(
+            [],
+
+            "{$this->getApiUrl()}/product/vintages"
+        );
+
+        return array_get($response, 'data');
+    }
+
+    /**
+     * fetchProductPrices
+     * 
+     * @return array 
+     * @note {\"rangeFrom\":10,\"rangeTo\":60000}
+     */
+    public function fetchProductPrices()
+    {
+        $response = $this->curl(
+            [],
+
+            "{$this->getApiUrl()}/product/price/range"
+        );
+
+        return array_get($response, 'data');
+    }
+
+    /**
+     * fetchProductWineTypes
+     * 
+     * @return array
+     * @note {\"winetypes\":[\"Still Rose\",\"Red Wine\",\"White Wine\"]}
+     */
+    public function fetchProductWineTypes()
+    {
+        $response = $this->curl(
+            [],
+
+            "{$this->getApiUrl()}/product/winetypes"
+        );
+
+        return array_get($response, 'data');
+    }
+
+    /**
+     * 取得商品完整搜尋條件
+     *
+     * @param  array $params
+     * @return array
+     */
+    public function fetchCriteria(array $params = [])
+    {
+        $response = $this->curl(
+            $params,
+
+            "{$this->getApiUrl()}/product/detail/criteria"
         );
 
         return array_get($response, 'data');
@@ -183,39 +254,7 @@ trait ProductTrait
         $response = $this->curl(
             [],
 
-            'mpos/service/product/version'
-        );
-
-        return array_get($response, 'data');
-    }
-
-    /**
-     * fetchProductVintages
-     * 
-     * @return array
-     */
-    public function fetchProductVintages()
-    {
-        $response = $this->curl(
-            [],
-
-            'mpos/service/product/vintages'
-        );
-
-        return array_get($response, 'data');
-    }
-
-    /**
-     * fetchProductWineTypes
-     * 
-     * @return array
-     */
-    public function fetchProductWineTypes()
-    {
-        $response = $this->curl(
-            [],
-
-            'mpos/service/product/winetypes'
+            "{$this->getApiUrl()}/product/version"
         );
 
         return array_get($response, 'data');
@@ -243,7 +282,7 @@ trait ProductTrait
                 'prdID' => $productId,
             ],
 
-            'mpos/service/stock/query'
+            "{$this->getApiUrl()}/stock/query"
         );
 
         return array_get($response, 'data');

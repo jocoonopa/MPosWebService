@@ -48,7 +48,7 @@ trait MemberTrait
         $response = $this->curl(
             $data,
 
-            'mpos/service/member/count'
+            "{$this->getApiUrl()}/member/count"
         );
 
         if (isset($response['data'])) {
@@ -64,11 +64,11 @@ trait MemberTrait
      * @return array
      */
     public function fetchMembers(array $data)
-    {
+    {        
         $response = $this->curl(
             $data,
             
-            'mpos/service/member/query'
+            "{$this->getApiUrl()}/member/query"
         );
 
         return array_get($response, 'data');
@@ -84,7 +84,7 @@ trait MemberTrait
         $response = $this->curl(
             [],
             
-            'mpos/service/member/fields'
+            "{$this->getApiUrl()}/member/fields"
         );
 
         return array_get($response, 'data');
@@ -100,7 +100,7 @@ trait MemberTrait
         $response = $this->curl(
             [],
             
-            'mpos/service/member/district/query'
+            "{$this->getApiUrl()}/member/district/query"
         );
 
         return array_get($response, 'data');
@@ -109,7 +109,7 @@ trait MemberTrait
     /**
      * fetchMemberAddressbook
      *
-     * @param  array $data
+     * @param  array $data [example: {"keywords": "1"}]
      * @return array
      */
     public function fetchMemberAddressbook(array $data)
@@ -117,7 +117,7 @@ trait MemberTrait
         $response = $this->curl(
             $data,
             
-            'mpos/service/member/addressbook/query'
+            "{$this->getApiUrl()}/member/addressbook/query"
         );
 
         return array_get($response, 'data');

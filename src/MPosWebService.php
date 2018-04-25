@@ -11,7 +11,7 @@ use Ixudra\Curl\CurlService;
  */
 class MPosWebService
 {
-    use MemberTrait, ProductTrait, ShopTrait, OrderTrait, PromotionTrait;
+    use MemberTrait, ProductTrait, ShopTrait, OrderTrait, PromotionTrait, PaymentTrait;
 
     /**
      * @var \Ixudra\Curl\CurlService
@@ -45,6 +45,11 @@ class MPosWebService
          */
         $params = $this->getParams($data);
 
+        // @author jocoonopa
+        // @date 2018-04-25
+        // @reason 對應 kevin api 的改版，處理 findRelation 轉換
+        $params['findRelation'] = $this->getRelation(array_get($params, 'findRelation'));
+
         $params['sign'] = $this->getSign($params, $this->getConfig()['token']);
 
         /**
@@ -70,7 +75,7 @@ class MPosWebService
          * 
          * @var array
          */
-        $responseData = json_decode($responseArr['data']);
+        $responseData = is_null(json_decode($responseArr['data'])) ? $responseArr['data'] : json_decode($responseArr['data']);
 
         return [
             'is_success' => array_get($responseArr, 'is_success'),
@@ -78,6 +83,31 @@ class MPosWebService
             'message' => array_get($responseArr, 'message'),
             'data' => $responseData,
         ];
+    }
+
+    /**
+     * 轉換 findRelation 的值
+     *
+     * @param string|integer $val ['|','+'] [0,1] ['or', 'and']
+     */
+    protected function getRelation($val = null)
+    {
+        // Default 使用 and 條件
+        if (is_null($val)) {
+            return '+';
+        }
+
+        if (in_array($val, ['+', 1, '1', 'and'])) {
+            return '+';
+        }
+
+        if (in_array($val, ['|', 0, '0', 'or'])) {
+            return '|';
+        }
+
+        // 進階搜尋，例如:
+        // ({0}{1}{2})+{3}
+        return $val;
     }
 
     /**
@@ -148,6 +178,22 @@ class MPosWebService
         $str = strtoupper(md5($str));
 
         return $str;
+    }
+
+    /**
+     * 取得 Api url 前綴
+     * 
+     * @return string
+     */
+    protected function getApiUrl()
+    {
+        $version = array_get($this->getConfig(), 'version', null);
+
+        if (is_null($version)) {
+            return 'mpos/service';
+        }
+        
+        return "mpos/{$version}/service";
     }
 
     /**

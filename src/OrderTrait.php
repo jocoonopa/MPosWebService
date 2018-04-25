@@ -45,7 +45,7 @@ trait OrderTrait
         $response = $this->curl(
             $params,
 
-            'mpos/service/order/query'
+            "{$this->getApiUrl()}/order/query"
         );
 
         return array_get($response, 'data');
@@ -62,7 +62,7 @@ trait OrderTrait
         $response = $this->curl(
             $params,
 
-            'mpos/service/order/count'
+            "{$this->getApiUrl()}/order/count"
         );
 
         if (isset($response['data'])) {
@@ -89,7 +89,7 @@ trait OrderTrait
         $response = $this->curl(
             $params,
 
-            'mpos/service/order/item/query'
+            "{$this->getApiUrl()}/order/item/query"
         );
 
         return array_get($response, 'data');
@@ -105,7 +105,7 @@ trait OrderTrait
         $response = $this->curl(
             $params,
 
-            'mpos/service/order/add'
+            "{$this->getApiUrl()}/order/add"
         );
 
         return $response;

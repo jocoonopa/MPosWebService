@@ -18,4 +18,6 @@ return [
 
     // Domain
     'domain' => 'DOMAIN',
+
+    'version' => null,
 ];

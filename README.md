@@ -14,7 +14,7 @@ api 常見名詞介紹
 
 ## displayFields
 
-代表要显示的内容，如果不清楚具体的 Fields 名，可以通过 `mpos/service/member/fields`查询，有多个显示的字段以 `；` 隔开，eg `title;firstName`
+代表要显示的内容，如果不清楚具体的 Fields 名，可以通过 `mpos/1.0/service/member/fields`查询，有多个显示的字段以 `；` 隔开，eg `title;firstName`
 
 ## queryFields
 
@@ -60,7 +60,7 @@ api 常見名詞介紹
 
 **url**
 
-`mpos/service/member/query`
+`mpos/1.0/service/member/query`
 
 **input**
 
@@ -126,7 +126,7 @@ $ php artisan mpos-ws:member:query
 
 **url**
 
-`mpos/service/member/count`
+`mpos/1.0/service/member/count`
 
 **input**
 
@@ -166,7 +166,7 @@ $ php artisan mpos-ws:member:count
 
 **url**
 
-`mpos/service/member/fields`
+`mpos/1.0/service/member/fields`
 
 **output**
 
@@ -191,7 +191,7 @@ $ php artisan mpos-ws:member:fields
 
 ## Member district detail
 
-`mpos/service/member/district/query`
+`mpos/1.0/service/member/district/query`
 
 **output**
 
@@ -229,7 +229,7 @@ $ php artisan mpos-ws:member:districts
 
 **url**
 
-`mpos/service/member/addressbook/query`
+`mpos/1.0/service/member/addressbook/query`
 
 **input**
 
@@ -287,7 +287,7 @@ $ php artisan mpos-ws:member:addressbook
 
 **url**
 
-`mpos/service/product/version`
+`mpos/1.0/service/product/version`
 
 **output**
 
@@ -315,7 +315,7 @@ $ php artisan mpos-ws:product:version
 
 **url**
 
-`mpos/service/product/fields`
+`mpos/1.0/service/product/fields`
 
 **output**
 
@@ -343,7 +343,7 @@ $ php artisan mpos-ws:product:fields
 
 **url**
 
-`mpos/service/product/detail/fields`
+`mpos/1.0/service/product/detail/fields`
 
 **output**
 
@@ -370,7 +370,7 @@ $ php artisan mpos-ws:product:fields --detail
 
 **url**
 
-`mpos/service/product/query`
+`mpos/1.0/service/product/query`
 
 **input**
 
@@ -437,7 +437,7 @@ $ php artisan mpos-ws:product:query
 
 **url**
 
-`mpos/service/product/count`
+`mpos/1.0/service/product/count`
 
 **input**
 
@@ -475,7 +475,7 @@ $ php artisan mpos-ws:product:query
 
 **url**
 
-`mpos/service/product/detail/query`
+`mpos/1.0/service/product/detail/query`
 
 **input**
 
@@ -574,7 +574,7 @@ $ php artisan mpos-ws:product:query --detail
 
 **url**
 
-`mpos/service/product/countries`
+`mpos/1.0/service/product/countries`
 
 **output**
 
@@ -601,7 +601,7 @@ $ php artisan mpos-ws:product:countries
 
 **url**
 
-`mpos/service/product/regions`
+`mpos/1.0/service/product/regions`
 
 **output**
 
@@ -628,7 +628,7 @@ $ php artisan mpos-ws:product:regions
 
 **url**
 
-`mpos/service/product/winetypes`
+`mpos/1.0/service/product/winetypes`
 
 **output**
 
@@ -651,7 +651,7 @@ $ php artisan mpos-ws:product:regions
 
 **url**
 
-`mpos/service/product/grapes`
+`mpos/1.0/service/product/grapes`
 
 **output**
 
@@ -678,7 +678,7 @@ $ php artisan mpos-ws:product:grapes
 
 **url**
 
-`mpos/service/product/vintages`
+`mpos/1.0/service/product/vintages`
 
 **output**
 
@@ -701,13 +701,56 @@ $ php artisan mpos-ws:product:grapes
 $ php artisan mpos-ws:product:vintages
 ```
 
+## Product Criteria
+
+**url**
+
+`mpos/1.0/service/product/detail/criteria`
+
+**input**
+
+```js
+
+{
+    "keywords":"DEC_PROMO;530",
+    "queryFields":"groupID;storeID"
+}
+
+```
+
+**output**
+
+```js
+
+{
+    "message":"处理成功",
+    "data": {
+        "grapes":["Cabernet Sauvignon and Blends"],
+        "countries":["France"],
+        "regions":["St. Julien"],
+        "vintages":["2006"],
+        "winetypes":["Red"],
+        "prices":[255],
+    },
+    "error_code":"2000",
+    "is_success":true
+}
+
+```
+
+**Artisan CLI**
+
+```bash
+
+```
+
 # SHOPCART
 
 ## Add product
 
 **url**
 
-`mpos/service/shopcart/add`
+`mpos/1.0/service/shopcart/add`
 
 **input**
 
@@ -769,7 +812,7 @@ $ php artisan mpos-ws:cart:add
 
 **url**
 
-`mpos/service/shopcart/query`
+`mpos/1.0/service/shopcart/query`
 
 **input**
 
@@ -828,7 +871,7 @@ $ php artisan mpos-ws:cart:view
 
 **url**
 
-`mpos/service/shopcart/remove`
+`mpos/1.0/service/shopcart/remove`
 
 **input**
 
@@ -892,7 +935,7 @@ $ php artisan mpos-ws:cart:remove
 ## Order  available fields
 
 **url**
-`http://dev.vigasia.com/mpos/service/order/fields`
+`http://dev.vigasia.com/mpos/1.0/service/order/fields`
 
 **output**
 
@@ -913,7 +956,7 @@ $ php artisan mpos-ws:cart:remove
 ## Order item available fields
 
 **url**
-`http://dev.vigasia.com/mpos/service/order/item/fields`
+`http://dev.vigasia.com/mpos/1.0/service/order/item/fields`
 
 **output**
 
@@ -932,7 +975,7 @@ $ php artisan mpos-ws:cart:remove
 
 ## Create order
 **url**
-`http://dev.vigasia.com/mpos/service/order/add`
+`http://dev.vigasia.com/mpos/1.0/service/order/add`
 
 **input** 
 
@@ -1031,7 +1074,7 @@ $ php artisan mpos-ws:order:create
 (測試一下有無 currentPage, pageSize 等參數)
 
 **url**
-`http://dev.vigasia.com/mpos/service/order/query`
+`http://dev.vigasia.com/mpos/1.0/service/order/query`
 
 **input**
 
@@ -1161,7 +1204,7 @@ $ php artisan mpos-ws:order:query
 
 ## Order count
 **url**
-`http://dev.vigasia.com/mpos/service/order/count`
+`http://dev.vigasia.com/mpos/1.0/service/order/count`
 
 **input**
 
@@ -1192,7 +1235,7 @@ $ php artisan mpos-ws:order:query
 ## Get specific order item
 
 **url**
-`http://dev.vigasia.com/mpos/service/order/item/query`
+`http://dev.vigasia.com/mpos/1.0/service/order/item/query`
 
 **input**
 
@@ -1246,7 +1289,7 @@ $ php artisan mpos-ws:order:item
 ## Order time slots (確定是送貨時間? 那 input 是?)
 
 **url**
-`http://dev.vigasia.com/mpos/service/order/timeslots`
+`http://dev.vigasia.com/mpos/1.0/service/order/timeslots`
 
 **input**
 **output**
@@ -1266,7 +1309,7 @@ $ php artisan mpos-ws:order:item
 
 ## Order delivery methods
 **url**
-`http://dev.vigasia.com/mpos/service/order/deliverymethods`
+`http://dev.vigasia.com/mpos/1.0/service/order/deliverymethods`
 
 **input**
 
@@ -1305,7 +1348,7 @@ $ php artisan mpos-ws:order:item
 # Stock
 
 **url**
-`http://dev.vigasia.com/mpos/service/stock/query`
+`http://dev.vigasia.com/mpos/1.0/service/stock/query`
 
 **input**
 
@@ -1347,7 +1390,7 @@ $ php artisan mpos-ws:product:stock
 # Promotion -（需要上uat才有测试数据）
 
 **url**
-`http://dev.vigasia.com/mpos/service/promo/query`
+`http://dev.vigasia.com/mpos/1.0/service/promo/query`
 
 **input**
 
@@ -1503,7 +1546,7 @@ $ php artisan mpos-ws:product:stock
 # Promotion List
 
 **url**
-`http://dev.vigasia.com/mpos/service/promo/list`
+`http://dev.vigasia.com/mpos/1.0/service/promo/list`
 
 **output**
 
@@ -1608,7 +1651,7 @@ $ php artisan mpos-ws:product:stock
 ## link
 
 **url**
-`http://dev.vigasia.com/mpos/service/payment/wirecard/link`
+`http://dev.vigasia.com/mpos/1.0/service/payment/wirecard/link`
 
 **input**
 
@@ -1640,7 +1683,7 @@ $ php artisan mpos-ws:product:stock
 ## Payment feedback
 
 **url**
-`http://dev.vigasia.com/mpos/service/payment/wirecard/feedback`
+`http://dev.vigasia.com/mpos/1.0/service/payment/wirecard/feedback`
 
 **input**
 
@@ -1691,7 +1734,7 @@ transaction_type=purchase
 
 ```
 
-**outpu**
+**output**
 
 ```js
 
@@ -1703,3 +1746,4 @@ transaction_type=purchase
 }
 
 ```
+
