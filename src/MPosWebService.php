@@ -40,15 +40,15 @@ class MPosWebService
      */
     public function curl(array $data, $url)
     {
+        // @author jocoonopa
+        // @date 2018-04-25
+        // @reason 對應 kevin api 的改版，處理 fieldsRelation 轉換
+        $data['fieldsRelation'] = $this->getRelation(array_get($data, 'fieldsRelation'));
+
         /**
          * @var array
          */
         $params = $this->getParams($data);
-
-        // @author jocoonopa
-        // @date 2018-04-25
-        // @reason 對應 kevin api 的改版，處理 findRelation 轉換
-        $params['findRelation'] = $this->getRelation(array_get($params, 'findRelation'));
 
         $params['sign'] = $this->getSign($params, $this->getConfig()['token']);
 

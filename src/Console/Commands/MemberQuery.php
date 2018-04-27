@@ -35,7 +35,7 @@ class MemberQuery extends Command
             'displayFields' => $this->ask('What are your displayFields? (多筆請用 ; 區隔)', 'firstName'),
             'keywords' => $this->ask(CommandHelper::getKeywordsDesc(), 'samuel|kevin'),
             'queryFields' => $this->ask('What are your queryFields', 'firstName'),
-            'fieldsRelation' => $this->choice('What is your join condition {0: or, 1: and}' , [0, 1], 1),
+            'fieldsRelation' => $this->ask('What is your join condition' , 1),
             'currentPage' => $this->ask('What is your current page', 1),
             'pageSize' => $this->ask('Whats is your pageSize?', 10),
             'sortFields' => $this->ask('What are your sortFields (多筆請用 ; 區隔)', 'firstName'),

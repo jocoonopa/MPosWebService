@@ -34,6 +34,7 @@ class ProductCriteria extends Command
         $data = [
             "keywords" => $this->ask(CommandHelper::getKeywordsDesc(), 'DEC_PROMO;530'),
             "queryFields" => $this->ask('What are your queryFields?', 'groupID;storeID'),
+            'fieldsRelation' => $this->ask('What is your join condition' , 1),
         ];
 
         dump(MPosWs::fetchCriteria($data));

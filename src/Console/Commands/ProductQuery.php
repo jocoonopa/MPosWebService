@@ -36,6 +36,7 @@ class ProductQuery extends Command
             'keywords' => $this->ask(CommandHelper::getKeywordsDesc(), '180868;530'),
             'displayFields' => $this->ask('What are your displayFields? (; 分隔)', 'prdBrandEnu;prdNameEnu'),
             'queryFields' => $this->ask('What are your queryFields?(; 分隔)', 'prdID;storeID'),
+            'fieldsRelation' => $this->ask('What is your join condition' , 1),
             'currentPage' => $this->ask('What is your current page?', 1),
             'pageSize' => $this->ask('What is your pageSize?', 10),
             'sortFields' => $this->ask('What is your sortFields? (; 分隔)', 'prdNameEnu'),
