@@ -32,7 +32,7 @@ class ShopCartView extends Command
     public function handle()
     {
         $data = [
-            'shopUUID' => $this->ask('What is your shopUUID?', 'dbf2166664754c3db8557e836e9554f0'),
+            'shopUUID' => $this->ask('What is your shopUUID?', 'eec159b45269414cb88ee74decd1df3a'),
             'storeID' => $this->ask('What is your storeID?', '530'),
         ];
 

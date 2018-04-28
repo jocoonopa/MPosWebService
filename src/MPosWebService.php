@@ -43,12 +43,20 @@ class MPosWebService
         // @author jocoonopa
         // @date 2018-04-25
         // @reason 對應 kevin api 的改版，處理 fieldsRelation 轉換
-        $data['fieldsRelation'] = $this->getRelation(array_get($data, 'fieldsRelation'));
+        $fieldsRelation = $this->getRelation(array_get($data, 'fieldsRelation'));
+
+        if (!is_null($fieldsRelation)) {
+            $data['fieldsRelation'] = $this->getRelation(array_get($data, 'fieldsRelation'));
+        }
 
         /**
          * @var array
          */
         $params = $this->getParams($data);
+
+        if ($this->getConfig()['debug']) {
+            dump($params);
+        }
 
         $params['sign'] = $this->getSign($params, $this->getConfig()['token']);
 
@@ -64,6 +72,10 @@ class MPosWebService
             ->withHeader('charset: UTF-8')
             ->post()
         ;
+
+        if ($this->getConfig()['debug']) {
+            dump($response);
+        }
 
         /**
          * @var array
@@ -92,9 +104,8 @@ class MPosWebService
      */
     protected function getRelation($val = null)
     {
-        // Default 使用 and 條件
         if (is_null($val)) {
-            return '+';
+            return null;
         }
 
         if (in_array($val, ['+', 1, '1', 'and'])) {

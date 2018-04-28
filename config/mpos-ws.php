@@ -19,5 +19,7 @@ return [
     // Domain
     'domain' => 'DOMAIN',
 
+    'debug' => false,
+
     'version' => null,
 ];
