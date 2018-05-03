@@ -19,7 +19,17 @@ return [
     // Domain
     'domain' => 'DOMAIN',
 
+    // Is show dump message
     'debug' => false,
+
+    // Enable log
+    'log' => true,
+
+    // Dispatch event
+    'observe' => true,
+
+    // Dispatch private channel
+    'channels' => ['employee.1'],
 
     'version' => null,
 ];

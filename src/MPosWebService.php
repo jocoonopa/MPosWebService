@@ -3,6 +3,7 @@
 namespace jocoonopa\MPosWebService;
 
 use Ixudra\Curl\CurlService;
+use jocoonopa\MPosWebService\Event\ApiCalled;
 
 /**
  * MPosWebService
@@ -73,6 +74,19 @@ class MPosWebService
             ->post()
         ;
 
+        if ($this->getConfig()['log']) {
+            \Log::info('mpos-web-service-api', [
+                'url' => $url,
+                'vue' => request()->all(),
+                'request' => $params,
+                'response' => $response,
+            ]);
+        }
+
+        if ($this->getConfig()['observe']) {
+            event(new ApiCalled($url, request()->all(), $params, json_decode($response, true)));
+        }
+
         if ($this->getConfig()['debug']) {
             dump($response);
         }
@@ -108,11 +122,11 @@ class MPosWebService
             return null;
         }
 
-        if (in_array($val, ['+', 1, '1', 'and'])) {
+        if (in_array($val, ['+', '1', 'and'])) {
             return '+';
         }
 
-        if (in_array($val, ['|', 0, '0', 'or'])) {
+        if (in_array($val, ['|', '0', 'or'])) {
             return '|';
         }
 

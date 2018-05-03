@@ -22,4 +22,21 @@ trait PaymentTrait
 
         return $response;
     }
+
+    /**
+     * Aplipay
+     * 
+     * @param  array  $params
+     * @return string
+     */
+    public function aliPay(array $params)
+    {
+        $response = $this->curl(
+            $params,
+
+            "{$this->getApiUrl()}/payment/alipay/link"
+        );
+
+        return $response;
+    }
 }
