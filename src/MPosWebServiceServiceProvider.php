@@ -45,6 +45,8 @@ class MPosWebServiceServiceProvider extends ServiceProvider
                 \jocoonopa\MPosWebService\Console\Commands\PaymentLink::class,
                 \jocoonopa\MPosWebService\Console\Commands\ProductCriteria::class,
                 \jocoonopa\MPosWebService\Console\Commands\PaymentAlipay::class,
+                \jocoonopa\MPosWebService\Console\Commands\ProductUpdatePrice::class,
+                \jocoonopa\MPosWebService\Console\Commands\OrderUpdateStatus::class,
             ]);
         }
     }

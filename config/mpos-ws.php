@@ -31,5 +31,7 @@ return [
     // Dispatch private channel
     'channels' => ['employee.1'],
 
+    'monitored' => 1,
+
     'version' => null,
 ];

@@ -37,6 +37,7 @@ class ApiCalled implements ShouldBroadcastNow
 
         $this->log = [
             'url' => $url,
+            'laravel_url' => \Request::method() . '@' . \Request::url(),
             'httpRequestParams' => $httpRequestParams,
             'apiRequestParams' => $apiRequestParams,
             'response' => $response,

@@ -110,4 +110,28 @@ trait OrderTrait
 
         return $response;
     }
+
+    /**
+     * update order status
+     *
+     * @params array $params {
+     *      "orderID":163100000000390,
+     *      "orderStatus":"Payment Failure",
+     *      "saveBy":"MPOS",
+     * }
+     * 
+     * @return array $params
+     */
+    public function updateOrderStatus(array $params)
+    {
+        $params['orderID'] = (int) $params['orderID'];
+        
+        $response = $this->curl(
+            $params,
+
+            "{$this->getApiUrl()}/order/status/update"
+        );
+
+        return $response;
+    }
 }

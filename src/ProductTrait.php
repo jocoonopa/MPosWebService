@@ -265,6 +265,7 @@ trait ProductTrait
      *
      * @param  integer $storeId
      * @param  integer $productId
+     * 
      * @return array {
      *   "prdID":361396,
      *   "storeID":"530",
@@ -283,6 +284,32 @@ trait ProductTrait
             ],
 
             "{$this->getApiUrl()}/stock/query"
+        );
+
+        return array_get($response, 'data');
+    }
+
+    /**
+     * 更新產品價格
+     * 
+     * @params array $params {
+         "saveBy":"MPOS",
+         "prdPrice":258,
+         "prdID":180868,
+         "storeID":"530",
+         "remarks":"remarks"
+        }
+     * 
+     * @return array {
+            "responseCode":"00"
+        }
+     */
+    public function updateProductPrice(array $params)
+    {
+        $response = $this->curl(
+            $params,
+
+            "{$this->getApiUrl()}/product/price/update"
         );
 
         return array_get($response, 'data');

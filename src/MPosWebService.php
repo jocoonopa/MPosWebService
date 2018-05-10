@@ -37,9 +37,10 @@ class MPosWebService
      *
      * @param  array  $data
      * @param  string $url [must be url format]
+     * @param  boolean $wantOrigin 若為真，直接回傳 curl 結果不進行包裝處理
      * @return array      
      */
-    public function curl(array $data, $url)
+    public function curl(array $data, $url, $wantOrigin = false)
     {
         // @author jocoonopa
         // @date 2018-04-25
@@ -55,7 +56,8 @@ class MPosWebService
          */
         $params = $this->getParams($data);
 
-        if ($this->getConfig()['debug']) {
+        // 若啟用，會 dump，要小心這個會讓 vue 掛掉
+        if ($this->getConfig()['debug'] && 'local' === env('APP_ENV')) {
             dump($params);
         }
 
@@ -74,21 +76,20 @@ class MPosWebService
             ->post()
         ;
 
-        if ($this->getConfig()['log']) {
-            \Log::info('mpos-web-service-api', [
-                'url' => $url,
-                'vue' => request()->all(),
-                'request' => $params,
-                'response' => $response,
-            ]);
-        }
-
-        if ($this->getConfig()['observe']) {
-            event(new ApiCalled($url, request()->all(), $params, json_decode($response, true)));
-        }
-
-        if ($this->getConfig()['debug']) {
+        // 若啟用，會 dump，要小心這個會讓 vue 掛掉
+        if ($this->getConfig()['debug'] && 'local' === env('APP_ENV')) {
             dump($response);
+        }
+
+        // 是否啟用即時監察模式
+        if ($this->getConfig()['observe']) {
+            // 僅關註設定之使用者
+            if (
+                (auth()->user() && $this->getConfig()['monitored'] === auth()->user()->id) ||
+                false !== strpos(php_sapi_name(), 'cli')
+            ) {
+                event(new ApiCalled($url, request()->all(), $params, json_decode($response, true)));    
+            }
         }
 
         /**
@@ -102,6 +103,26 @@ class MPosWebService
          * @var array
          */
         $responseData = is_null(json_decode($responseArr['data'])) ? $responseArr['data'] : json_decode($responseArr['data']);
+
+        if (!array_get($responseArr, 'is_success')) {
+            \Log::emergency('mpos-web-service-api', [
+                'url' => $url,
+                'laravel_url' => \Request::url(),
+                'vue' => request()->all(),
+                'request' => $params,
+                'response' => $response,
+            ]);
+        }
+
+        if ($this->getConfig()['log']) {
+            \Log::info('mpos-web-service-api', [
+                'url' => $url,
+                'vue' => request()->all(),
+                'request' => $params,
+                'response' => $response,
+                'is_success' => array_get($responseArr, 'is_success'),
+            ]);
+        }
 
         return [
             'is_success' => array_get($responseArr, 'is_success'),
