@@ -64,6 +64,13 @@ class MPosWebService
         $params['sign'] = $this->getSign($params, $this->getConfig()['token']);
 
         /**
+         * Curl 執行時間起點
+         * 
+         * @var integer
+         */
+        $costTime = microtime(true);
+
+        /**
          * json string
          * 
          * @var json
@@ -75,6 +82,8 @@ class MPosWebService
             ->withHeader('charset: UTF-8')
             ->post()
         ;
+
+        $costTime = microtime(true) - $costTime;
 
         // 若啟用，會 dump，要小心這個會讓 vue 掛掉
         if ($this->getConfig()['debug'] && 'local' === env('APP_ENV')) {
@@ -88,7 +97,13 @@ class MPosWebService
                 (auth()->user() && $this->getConfig()['monitored'] === auth()->user()->id) ||
                 false !== strpos(php_sapi_name(), 'cli')
             ) {
-                event(new ApiCalled($url, request()->all(), $params, json_decode($response, true)));    
+                event(new ApiCalled(
+                    $url, 
+                    request()->all(), 
+                    $params, 
+                    json_decode($response, true), 
+                    $costTime
+                ));    
             }
         }
 
@@ -111,6 +126,7 @@ class MPosWebService
                 'vue' => request()->all(),
                 'request' => $params,
                 'response' => $response,
+                'post_cost_time'=> $costTime,
             ]);
         }
 
@@ -121,6 +137,7 @@ class MPosWebService
                 'request' => $params,
                 'response' => $response,
                 'is_success' => array_get($responseArr, 'is_success'),
+                'post_cost_time'=> $costTime,
             ]);
         }
 

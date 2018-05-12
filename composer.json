@@ -14,7 +14,7 @@
         "ixudra/curl": "^6.16",
         "illuminate/console": "^5.6"
     },
-    "version": "1.0.9",
+    "version": "1.0.10",
     "keywords": ["mpos"],
     "autoload": {
         "psr-4": {

@@ -23,8 +23,9 @@ class ApiCalled implements ShouldBroadcastNow
      * @param array  $httpRequestParams
      * @param array  $apiRequestParams
      * @param array  $response
+     * @param integer $costTime
      */
-    public function __construct($url, array $httpRequestParams, array $apiRequestParams, array $response)
+    public function __construct($url, array $httpRequestParams, array $apiRequestParams, array $response, $costTime)
     {
         foreach (['httpRequestParams', 'apiRequestParams', 'response'] as $filedName) {
             if (array_key_exists('data', $$filedName)) {
@@ -41,6 +42,7 @@ class ApiCalled implements ShouldBroadcastNow
             'httpRequestParams' => $httpRequestParams,
             'apiRequestParams' => $apiRequestParams,
             'response' => $response,
+            'costTime' => $costTime,
         ];
     }
 
